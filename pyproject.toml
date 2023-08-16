@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sphinx-try-examples"
+dynamic = ["version"]
+description = "Sphinx extension that allows trying out examples in a JupyterLite notebook"
+
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.8"
+authors = [
+    { name = "Albert Steppi" },
+]
+
+dependencies = [
+    "nbformat",
+    "jupyterlite-sphinx",
+]
+
+[project.optional-dependencies]
+dev = [
+    "hatch",
+]
+
+docs = [
+    "myst_parser",
+    "pydata-sphinx-theme",
+]
+
+[tool.hatch.version]
+path = "sphinx_try_examples/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/sphinx_try_examples",
+]
+
+[tool.hatch.envs.docs]
+features = ["docs"]
+[tool.hatch.envs.docs.scripts]
+build = "sphinx-build -W -b html docs docs/build/html"
+serve = "python -m http.server --directory docs/build/html"
