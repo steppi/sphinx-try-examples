@@ -73,12 +73,12 @@ class TryExamplesDirective(SphinxDirective):
             notebook_unique_name = f"{uuid4()}.ipynb".replace("-", "_")
             self.env.temp_data['generated_notebooks'][directive_key] = \
                 notebook_unique_name
-            self.options["path"] = notebook_unique_name
-
             # Copy the Notebook for RetroLite to find
             os.makedirs(notebooks_dir, exist_ok=True)
             with open(notebooks_dir / Path(notebook_unique_name), "w") as f:
                 nbf.write(nb, f)
+
+        self.options["path"] = notebook_unique_name
 
         app_path = f"{lite_app}{notebooks_path}"
         options = "&".join(
